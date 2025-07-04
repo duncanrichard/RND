@@ -1,0 +1,96 @@
+.bg-red-500 {
+    background-color: #ef4444; /* Warna merah */
+    color: white; /* Warna teks putih */
+    padding: 0.5rem 1rem; /* Padding */
+    border-radius: 0.25rem; /* Sudut sedikit melengkung */
+    font-size: 1rem; /* Ukuran font */
+    display: inline-flex; /* Menyusun elemen secara horizontal */
+    align-items: center; /* Mengatur elemen tengah secara vertikal */
+    justify-content: center; /* Mengatur elemen tengah secara horizontal */
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat hover */
+    text-decoration: none; /* Menghilangkan underline jika digunakan pada link */
+    border: none; /* Menghilangkan border default */
+}
+
+.bg-skyblue-500 {
+    background-color: #5496BF; /* Warna merah */
+    color: white; /* Warna teks putih */
+    padding: 0.5rem 1rem; /* Padding */
+    border-radius: 0.25rem; /* Sudut sedikit melengkung */
+    font-size: 1rem; /* Ukuran font */
+    display: inline-flex; /* Menyusun elemen secara horizontal */
+    align-items: center; /* Mengatur elemen tengah secara vertikal */
+    justify-content: center; /* Mengatur elemen tengah secara horizontal */
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat hover */
+    text-decoration: none; /* Menghilangkan underline jika digunakan pada link */
+    border: none; /* Menghilangkan border default */
+}
+
+.bg-skyblue-900 {
+    background-color: #032859; /* Warna merah */
+    color: white; /* Warna teks putih */
+    padding: 0.5rem 1rem; /* Padding */
+    border-radius: 0.25rem; /* Sudut sedikit melengkung */
+    font-size: 1rem; /* Ukuran font */
+    display: inline-flex; /* Menyusun elemen secara horizontal */
+    align-items: center; /* Mengatur elemen tengah secara vertikal */
+    justify-content: center; /* Mengatur elemen tengah secara horizontal */
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat hover */
+    text-decoration: none; /* Menghilangkan underline jika digunakan pada link */
+    border: none; /* Menghilangkan border default */
+}
+
+.bg-gold-500 {
+    background-color: #FF8C00; /* Warna merah */
+    color: white; /* Warna teks putih */
+    padding: 0.5rem 1rem; /* Padding */
+    border-radius: 0.25rem; /* Sudut sedikit melengkung */
+    font-size: 1rem; /* Ukuran font */
+    display: inline-flex; /* Menyusun elemen secara horizontal */
+    align-items: center; /* Mengatur elemen tengah secara vertikal */
+    justify-content: center; /* Mengatur elemen tengah secara horizontal */
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat hover */
+    text-decoration: none; /* Menghilangkan underline jika digunakan pada link */
+    border: none; /* Menghilangkan border default */
+}
+
+
+.dataTables_wrapper {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+table.dataTable {
+    border-collapse: collapse !important;
+}
+table.dataTable th,
+table.dataTable td {
+    border: 1px solid #ddd !important;
+}
+
+.hover-effect {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .hover-effect:hover {
+    transform: scale(1.05); /* Membuat elemen menjadi sedikit lebih besar */
+    background-color: #f0f0f0; /* Mengubah warna latar belakang saat di-hover */
+  }
+  
+  .hover-effect img {
+    transition: transform 0.3s ease;
+  }
+  
+  .hover-effect:hover img {
+    transform: scale(1.1); /* Memperbesar gambar sedikit saat di-hover */
+  }
+
+  .tab-item {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+.tab-item.active {
+    background-color: #007bff;
+    color: #ffffff;
+    }
+
+  
