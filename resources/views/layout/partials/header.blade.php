@@ -38,7 +38,7 @@
             </li>
                @endcan
 
-               @can('view master bahan baku')
+               @can('view master bahan baku sample')
             <li>
                 <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route('master_bahan_baku.index') }}">
                     <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Master List Sample Bahan Baku</span>
@@ -202,25 +202,35 @@
         </a>
       </li> 
       @endcan
-    @role('SUPER ADMIN')
+@role(['SUPER ADMIN', 'Direktur (DIR-OPS)'])
 <li class="mt-0.5 w-full">
   <a id="hak_akses" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route('role-permission.index') }}">
-    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-      <i class="relative top-0 text-sm leading-normal fa-solid fa-user-shield"></i>
+    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center text-center xl:p-2.5">
+      <i class="fa-solid fa-user-shield text-blue-600"></i>
     </div>
     <span class="ml-1 duration-300 opacity-100 font-bold pointer-events-none ease">Hak Akses</span>
   </a>
 </li>
 <li class="mt-0.5 w-full">
+  <a id="jabatan" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route('roles.index') }}">
+    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center text-center xl:p-2.5">
+      <i class="fa-solid fa-briefcase text-purple-600"></i>
+    </div>
+    <span class="ml-1 duration-300 opacity-100 font-bold pointer-events-none ease">Jabatan</span>
+  </a>
+</li>
+
+<li class="mt-0.5 w-full">
   <a id="account" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route('accounts.index') }}">
-    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center text-center xl:p-2.5">
       <i class="fa-solid fa-users-cog text-green-600"></i>
     </div>
     <span class="ml-1 duration-300 opacity-100 font-bold pointer-events-none ease">Account Management</span>
   </a>
 </li>
-
 @endrole
+
+
 
     </ul>
   </div>

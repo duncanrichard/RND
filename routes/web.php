@@ -30,6 +30,8 @@ use App\Http\Controllers\permintaanController;
 use App\Http\Controllers\pengembalianController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\RoleController;
+
 
 
 /*
@@ -284,14 +286,22 @@ Route::prefix('pengembalian')->group(function () {
     Route::get('/exportDetailStokBahanKemas', [pengembalianController::class, 'exportDetailStokBahanKemas'])->name('pengembalian.exportDetailStokBahanKemas');
     Route::get('/printDetailPengembalian/{id}', [pengembalianController::class, 'printDetailPengembalian'])->name('pengembalian.printDetailPengembalian');
 });
+Route::middleware(['auth', 'role:SUPER ADMIN|Direktur (DIR-OPS)'])
+    ->prefix('jabatan')->name('roles.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [RoleController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [RoleController::class, 'update'])->name('update');
+        Route::delete('/{id}', [RoleController::class, 'destroy'])->name('destroy');
+    });
+Route::middleware(['auth', 'role:SUPER ADMIN|Direktur (DIR-OPS)'])->group(function () {
 
-
-Route::middleware(['auth', 'role:SUPER ADMIN'])->group(function () {
     Route::get('/role-permission', [RolePermissionController::class, 'index'])->name('role-permission.index');
     Route::post('/role-permission', [RolePermissionController::class, 'assign'])->name('role-permission.assign');
 });
 
-Route::middleware(['auth', 'role:SUPER ADMIN'])->prefix('accounts')->name('accounts.')->group(function () {
+Route::middleware(['auth', 'role:SUPER ADMIN|Direktur (DIR-OPS)'])->prefix('accounts')->name('accounts.')->group(function () {
     Route::get('/', [AccountController::class, 'index'])->name('index');
     Route::get('/create', [AccountController::class, 'create'])->name('create');
     Route::post('/store', [AccountController::class, 'store'])->name('store');

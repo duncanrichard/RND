@@ -356,7 +356,7 @@
                       <div class="flex py-1">
                         <div class="flex flex-col justify-center">
                           <h6 class="mb-1 text-sm font-normal leading-normal dark:text-white">
-                            <span class="font-semibold">Hai  {{ Auth::user()->nama }}</span> <!-- Nama pengguna -->
+                            <span class="font-semibold">Hai  {{ Auth::user()->username }}</span> <!-- Nama pengguna -->
                           </h6>
                         </div>
                       </div>
