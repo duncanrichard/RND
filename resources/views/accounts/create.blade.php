@@ -31,7 +31,7 @@
             </div>
 
             {{-- Email --}}
-            <div>
+           <!--  <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" name="email" value="{{ old('email') }}"
                     class="w-full mt-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 {{ $errors->has('email') ? 'border-red-500' : '' }}"
@@ -39,7 +39,7 @@
                 @error('email')
                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> -->
 
             {{-- Password --}}
             <div>

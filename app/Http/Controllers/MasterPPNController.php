@@ -44,44 +44,57 @@ class MasterPPNController extends Controller
         return view('master_ppn.create');
     }
 
-    public function store(Request $request)
-    {
-        if (MasterPPN::exists()) {
-            activity()
-                ->causedBy(Auth::user())
-                ->tap(fn ($activity) => $activity->id_user = Auth::id())
-                ->log('Gagal menyimpan Master PPN karena data sudah ada');
-
-            return redirect()->route('master_ppn.index')->with('error', 'Data sudah ada, tidak dapat menambahkan data baru.');
-        }
-
-        $this->updateExchangeRates();
-
-        $request->validate([
-            'ppn' => 'required|numeric',
-            'pph' => 'required|numeric',
-            'additional_cost' => 'required|numeric',
-        ]);
-
-        $master = MasterPPN::create([
-            'ppn' => $request->ppn,
-            'pph' => $request->pph,
-            'kurs_usd' => session('kurs_usd', 16492.13),
-            'kurs_euro' => session('kurs_euro', 17141.92),
-            'kurs_yuan' => session('kurs_yuan', 2264.03),
-            'kurs_rupiah' => session('kurs_rupiah', 1),
-            'additional_cost' => $request->additional_cost,
-        ]);
-
+public function store(Request $request)
+{
+    // Cek jika data sudah ada (hanya boleh satu entry)
+    if (MasterPPN::exists()) {
         activity()
             ->causedBy(Auth::user())
-            ->performedOn($master)
             ->tap(fn ($activity) => $activity->id_user = Auth::id())
-            ->withProperties($request->all())
-            ->log('Menambahkan data Master PPN');
+            ->log('Gagal menyimpan Master PPN karena data sudah ada');
 
-        return redirect()->route('master_ppn.index')->with('success', 'Data berhasil ditambahkan');
+        return redirect()->route('master_ppn.index')->with('error', 'Data sudah ada, tidak dapat menambahkan data baru.');
     }
+
+    // Ambil kurs terbaru dari BI (akan disimpan ke session)
+    $this->updateExchangeRates();
+
+    // Validasi input user
+    $request->validate([
+        'ppn' => 'required|numeric',
+        'pph' => 'required|numeric',
+        'additional_cost' => 'required|numeric',
+    ]);
+
+    // Ambil kurs dari session (sudah diisi oleh updateExchangeRates)
+    $kurs_usd = session('kurs_usd');
+    $kurs_euro = session('kurs_euro');
+    $kurs_yuan = session('kurs_yuan');
+    $kurs_rupiah = session('kurs_rupiah', 1); // fallback to 1
+
+    // Simpan data ke database
+    $master = MasterPPN::create([
+        'ppn' => $request->ppn,
+        'pph' => $request->pph,
+        'kurs_usd' => $kurs_usd,
+        'kurs_euro' => $kurs_euro,
+        'kurs_yuan' => $kurs_yuan,
+        'kurs_rupiah' => $kurs_rupiah,
+        'additional_cost' => $request->additional_cost,
+    ]);
+
+    // Logging activity
+    activity()
+        ->causedBy(Auth::user())
+        ->performedOn($master)
+        ->tap(fn ($activity) => $activity->id_user = Auth::id())
+        ->withProperties($request->all())
+        ->log('Menambahkan data Master PPN');
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('master_ppn.index')->with('success', 'Data berhasil ditambahkan');
+}
+
 
     public function edit($id)
     {
@@ -137,70 +150,81 @@ class MasterPPNController extends Controller
     }
 
     public function updateExchangeRates()
-    {
-        $apiUrl = "https://www.bi.go.id/biwebservice/wskursbi.asmx?op=getSubKursAsing1";
+{
+    $soapBody = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <getSubKursAsing1 xmlns="http://www.bi.go.id/" />
+  </soap:Body>
+</soap:Envelope>
+XML;
 
-        try {
-            $response = Http::withHeaders([
-                'Content-Type' => 'text/xml; charset=utf-8',
-                'SOAPAction' => 'http://www.bi.go.id/getSubKursAsing1'
-            ])->timeout(10)->get($apiUrl);
+    $defaultRates = [
+        'kurs_usd' => 16492.13,
+        'kurs_euro' => 17141.92,
+        'kurs_yuan' => 2264.03,
+        'kurs_rupiah' => 1,
+    ];
 
-            if ($response->successful()) {
-                $xmlResponse = simplexml_load_string($response->body());
+    try {
+        $response = Http::withHeaders([
+            'Content-Type' => 'text/xml; charset=utf-8',
+            'SOAPAction' => 'http://www.bi.go.id/getSubKursAsing1',
+        ])->timeout(10)->post('https://www.bi.go.id/biwebservice/wskursbi.asmx', $soapBody);
 
-                if ($xmlResponse) {
-                    $xmlResponse->registerXPathNamespace('ns', 'http://www.bi.go.id/');
-                    $kursData = $xmlResponse->xpath('//ns:getSubKursAsing1Result')[0] ?? null;
+        if (!$response->successful()) {
+            throw new \Exception('SOAP response failed with status: ' . $response->status());
+        }
 
-                    if ($kursData) {
-                        $kursArray = json_decode(json_encode($kursData), true);
+        $xml = simplexml_load_string($response->body());
+        if (!$xml) {
+            throw new \Exception('Gagal parsing XML dari BI');
+        }
 
-                        $kurs_usd = $this->getKursByCode($kursArray, 'USD');
-                        $kurs_euro = $this->getKursByCode($kursArray, 'EUR');
-                        $kurs_yuan = $this->getKursByCode($kursArray, 'CNY');
+        $xml->registerXPathNamespace('soap', 'http://schemas.xmlsoap.org/soap/envelope/');
+        $body = $xml->xpath('//soap:Body')[0] ?? null;
+        if (!$body) {
+            throw new \Exception('Elemen Body SOAP tidak ditemukan');
+        }
 
-                        if ($kurs_usd && $kurs_euro && $kurs_yuan) {
-                            $masterPpn = MasterPPN::first();
-                            if ($masterPpn) {
-                                $masterPpn->update([
-                                    'kurs_usd' => $kurs_usd,
-                                    'kurs_euro' => $kurs_euro,
-                                    'kurs_yuan' => $kurs_yuan,
-                                ]);
-                            }
+        $json = json_encode($body);
+        $array = json_decode($json, true);
+        $kursList = $array['getSubKursAsing1Response']['getSubKursAsing1Result']['tabelKurs']['Kurs'] ?? [];
 
-                            session([
-                                'kurs_usd' => $kurs_usd,
-                                'kurs_euro' => $kurs_euro,
-                                'kurs_yuan' => $kurs_yuan,
-                                'kurs_rupiah' => 1,
-                            ]);
+        $kurs_usd = $this->getKursByCode($kursList, 'USD') ?? $defaultRates['kurs_usd'];
+        $kurs_euro = $this->getKursByCode($kursList, 'EUR') ?? $defaultRates['kurs_euro'];
+        $kurs_yuan = $this->getKursByCode($kursList, 'CNY') ?? $defaultRates['kurs_yuan'];
 
-                            return;
-                        }
-                    }
-                }
-            }
-        } catch (\Exception $e) {
-            Log::error("Error fetching exchange rates from BI: " . $e->getMessage());
+        // Simpan ke session
+        session([
+            'kurs_usd' => $kurs_usd,
+            'kurs_euro' => $kurs_euro,
+            'kurs_yuan' => $kurs_yuan,
+            'kurs_rupiah' => 1,
+        ]);
+    } catch (\Exception $e) {
+        Log::error("Gagal mengambil kurs BI: " . $e->getMessage());
 
-            session([
-                'kurs_usd' => 16492.13,
-                'kurs_euro' => 17141.92,
-                'kurs_yuan' => 2264.03,
-                'kurs_rupiah' => 1,
-            ]);
+        // Simpan fallback default
+        session($defaultRates);
+    }
+}
+
+
+  private function getKursByCode($kursList, $code)
+{
+    foreach ($kursList as $kurs) {
+        if (
+            isset($kurs['KODE']) &&
+            strtoupper($kurs['KODE']) === strtoupper($code) &&
+            isset($kurs['beli'])
+        ) {
+            return (float) str_replace(',', '', $kurs['beli']);
         }
     }
-
-    private function getKursByCode($kursArray, $code)
-    {
-        foreach ($kursArray as $kurs) {
-            if (isset($kurs['KODE']) && $kurs['KODE'] === $code) {
-                return (float) str_replace(',', '', $kurs['beli']);
-            }
-        }
-        return null;
-    }
+    return null;
+}
 }

@@ -26,14 +26,14 @@ class AccountController extends Controller
 {
     $validated = $request->validate([
         'username' => 'required|string|max:255',
-        'email' => 'required|email|unique:users',
+        /* 'email' => 'required|email|unique:users', */
         'password' => 'required|confirmed|min:6',
         'role' => 'required|exists:roles,name',
     ]);
 
     $user = User::create([
         'username' => $validated['username'],
-        'email' => $validated['email'],
+        /* 'email' => $validated['email'], */
         'password' => bcrypt($validated['password']),
     ]);
 
@@ -59,7 +59,7 @@ class AccountController extends Controller
 
     $validated = $request->validate([
         'username' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $user->id,
+       /*  'email' => 'required|email|unique:users,email,' . $user->id, */
         'password' => 'nullable|confirmed|min:6',
         'role' => 'required|exists:roles,name',
     ]);

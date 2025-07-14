@@ -32,7 +32,7 @@
                     <tr>
                         <th class="px-4 py-2 border">No</th>
                         <th class="px-4 py-2 border">Username</th>
-                        <th class="px-4 py-2 border">Email</th>
+                        <!-- <th class="px-4 py-2 border">Email</th> -->
                         <th class="px-4 py-2 border">Role</th>
                         <th class="px-4 py-2 border">Aksi</th>
                     </tr>
@@ -42,7 +42,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2 border text-center">{{ $index + 1 }}</td>
                         <td class="px-4 py-2 border">{{ $user->username }}</td>
-                        <td class="px-4 py-2 border">{{ $user->email }}</td>
+                        <!-- <td class="px-4 py-2 border">{{ $user->email }}</td> -->
                         <td class="px-4 py-2 border">{{ $user->getRoleNames()->join(', ') }}</td>
                         <td class="px-4 py-2 border whitespace-nowrap">
                             <a href="{{ route('accounts.edit', $user->id) }}" class="px-4 py-2 font-bold text-white rounded inline-flex items-center" style="background-color: #FF8C00;">

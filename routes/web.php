@@ -31,6 +31,7 @@ use App\Http\Controllers\pengembalianController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\API\ExchangeRateController;
 
 
 
@@ -312,7 +313,7 @@ Route::middleware(['auth', 'role:SUPER ADMIN|Direktur (DIR-OPS)'])->prefix('acco
 });
 
 
-
+Route::get('/get-latest-exchange-rates', [ExchangeRateController::class, 'getLatestRates']);
 // Rute logout
 Route::post('/logout', function () {
     Auth::logout();
