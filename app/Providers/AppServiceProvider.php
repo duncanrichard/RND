@@ -22,8 +22,18 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        // Schema::defaultStringLength(191);
+ public function boot()
+{
+    if (!file_exists(public_path('engineering_storage'))) {
+        $target = base_path('../engineering/storage/app/public');
+        $link = public_path('engineering_storage');
+
+        try {
+            symlink($target, $link);
+        } catch (\Throwable $e) {
+            \Log::error("Gagal membuat symlink: " . $e->getMessage());
+        }
+        
+    }
     }
 }

@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+         // Disk untuk engineering
+        'engineering' => [
+            'driver' => 'local',
+            'root' => base_path('../engineering/storage/app/public'),
+            'url' => env('APP_URL') . '/engineering_storage',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

@@ -92,5 +92,39 @@ table.dataTable td {
     background-color: #007bff;
     color: #ffffff;
     }
+@media (min-width: 768px) {
+    .md\:w-1\/12 {
+        width: 12.5%;
+    }
 
+    .md\:w-2\/12 {
+        width: 16.66667%;
+    }
+
+    .md\:w-3\/12 {
+        width: 25%;
+    }
+
+    .md\:w-8\/12 {
+        width: 66.66667%;
+    }
+
+    .md\:w-9\/12 {
+        width: 75%;
+    }
+}
+
+/* Default styling (mobile first) */
+.modal-container {
+    width: 80%;
+    /* Mobile width */
+}
+
+/* Desktop styling */
+@media (min-width: 768px) {
+    .modal-container {
+        width: 50%;
+        /* Desktop width */
+    }
+}
   

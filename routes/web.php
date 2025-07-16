@@ -32,6 +32,8 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\API\ExchangeRateController;
+use App\Http\Controllers\RequestPemeliharaanTeknikController;
+use App\Http\Controllers\RequestPerbaikanTeknikController;
 
 
 
@@ -249,7 +251,6 @@ Route::middleware('auth')->group(function () {
  //Singkatan Merk
  Route::resource('singkatan-merk', SingkatanMerkController::class);
 
-
  /* Permintaan Warehouse */
 Route::prefix('permintaan')->group(function () {
     Route::get('/', [permintaanController::class, 'index'])->name('permintaan')->middleware('auth');
@@ -310,6 +311,35 @@ Route::middleware(['auth', 'role:SUPER ADMIN|Direktur (DIR-OPS)'])->prefix('acco
     Route::put('/update/{id}', [AccountController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [AccountController::class, 'destroy'])->name('destroy');
 
+});
+
+Route::prefix('request_perbaikan')->name('request_perbaikan.')->middleware('auth')->group(function () {
+    Route::get('/', [RequestPerbaikanTeknikController::class, 'index'])->name('index');
+    Route::get('/create', [RequestPerbaikanTeknikController::class, 'create'])->name('create');
+    Route::post('/generate_nomor', [RequestPerbaikanTeknikController::class, 'generateNoPerbaikan'])->name('generateNomor');
+    Route::get('/search', [RequestPerbaikanTeknikController::class, 'search'])->name('search');
+    Route::post('/store', [RequestPerbaikanTeknikController::class, 'store'])->name('store');
+});
+
+Route::prefix('request_perbaikan')->name('request_perbaikan.')->middleware('auth')->group(function () {
+    Route::get('/', [RequestPerbaikanTeknikController::class, 'index'])->name('index');
+    Route::get('/progress', [RequestPerbaikanTeknikController::class, 'progress'])->name('progress');
+    Route::get('/close', [RequestPerbaikanTeknikController::class, 'close'])->name('close');
+    Route::get('/create', [RequestPerbaikanTeknikController::class, 'create'])->name('create');
+    Route::post('/generate_nomor', [RequestPerbaikanTeknikController::class, 'generateNoPerbaikan'])->name('generateNomor');
+    Route::get('/search', [RequestPerbaikanTeknikController::class, 'search'])->name('search');
+    Route::post('/store', [RequestPerbaikanTeknikController::class, 'store'])->name('store');
+    Route::put('/update_approval', [RequestPerbaikanTeknikController::class, 'updateStatusApproval'])->name('update_approval');
+    Route::get('/show', [RequestPerbaikanTeknikController::class, 'show'])->name('show');
+    Route::put('/update_close', [RequestPerbaikanTeknikController::class, 'updateProgressToClose'])->name('update_progress_to_close');
+    Route::get('/print', [RequestPerbaikanTeknikController::class, 'print'])->name('print');
+    Route::post('/destroy', [RequestPerbaikanTeknikController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('request_pemeliharaan')->name('request_pemeliharaan.')->middleware('auth')->group(function () {
+    Route::get('/', [RequestPemeliharaanTeknikController::class, 'index'])->name('index');
+    Route::get('/progress', [RequestPemeliharaanTeknikController::class, 'progress'])->name('progress');
+    Route::get('/close', [RequestPemeliharaanTeknikController::class, 'close'])->name('close');
 });
 
 

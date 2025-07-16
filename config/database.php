@@ -99,9 +99,9 @@ return [
                 'driver' => 'mysql',
                 'host' => env('DB_HRIS_HOST', '127.0.0.1'),
                 'port' => env('DB_HRIS_PORT', '3306'),
-                'database' => env('DB_HRIS_DATABASE', 'forge'),
-                'username' => env('DB_HRIS_USERNAME', 'forge'),
-                'password' => env('DB_HRIS_PASSWORD', ''),
+                'database' => env('DB_HRIS_DATABASE', 'hris'),
+                'username' => env('DB_HRIS_USERNAME', 'root'),
+                'password' => env('DB_HRIS_PASSWORD', 'DSI_@corp'),
                 'unix_socket' => env('DB_SOCKET', ''),
                 'charset' => 'utf8mb4',
                 'collation' => 'utf8mb4_unicode_ci',
@@ -125,6 +125,20 @@ return [
                 'strict' => true,
                 'engine' => null,
             ],
+           'mysql_engineering' => [
+    'driver' => 'mysql',
+    'host' => env('DB_ENGINEERING_HOST', '127.0.0.1'),
+    'port' => env('DB_ENGINEERING_PORT', '3306'),
+    'database' => env('DB_ENGINEERING_DATABASE', 'engineering_djc'),
+    'username' => env('DB_ENGINEERING_USERNAME', 'root'),
+    'password' => env('DB_ENGINEERING_PASSWORD', ''),
+    'unix_socket' => env('DB_SOCKET', ''),
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    'prefix' => '',
+    'strict' => true,
+    'engine' => null,
+],
 
 
             

@@ -202,6 +202,62 @@
         </a>
       </li> 
       @endcan
+
+       <li class="w-full mt-4">
+                <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Maintenance</h6>
+            </li>
+
+            <li class="mt-0.5 w-full">
+                <a id="request_perbaikan" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  rounded-lg px-4 transition-colors {{ request()->routeIs('request_perbaikan.index', 'request_perbaikan.progress', 'request_perbaikan.close') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="#" onclick="toggleDropdown('dropdown-menu-request-perbaikan')">
+                    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 fas fa-tools"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 font-bold pointer-events-none ease">Request Perbaikan</span>
+                    <i class="ml-auto text-xs leading-normal transition-transform duration-300 transform ni ni-bold-down"></i>
+                </a>
+                <ul id="dropdown-menu-request-perbaikan" class=" {{ request()->routeIs('request_perbaikan.index', 'request_perbaikan.progress', 'request_perbaikan.close') ? '' : 'hidden' }} ml-8 mt-2 space-y-2">
+                    <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_perbaikan.index') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_perbaikan.index') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Open</span>
+                        </a>
+                    </li>
+                      <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_perbaikan.progress') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_perbaikan.progress') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Progress</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_perbaikan.close') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_perbaikan.close') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Close</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="mt-0.5 w-full">
+                <a id="request_pemeliharaan" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  rounded-lg px-4 transition-colors {{ request()->routeIs('request_pemeliharaan.index', 'request_pemeliharaan.progress', 'request_pemeliharaan.close') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="#" onclick="toggleDropdown('dropdown-menu-request-pemliharaan')">
+                    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-cyan-500 fas fa-tools"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 font-bold pointer-events-none ease">Request Pemeliharaan</span>
+                    <i class="ml-auto text-xs leading-normal transition-transform duration-300 transform ni ni-bold-down"></i>
+                </a>
+                <ul id="dropdown-menu-request-pemliharaan" class=" {{ request()->routeIs('request_pemeliharaan.index', 'request_pemeliharaan.progress', 'request_pemeliharaan.close') ? '' : 'hidden' }} ml-8 mt-2 space-y-2">
+                   <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_pemeliharaan.index') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_pemeliharaan.index') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Open</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_pemeliharaan.progress') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_pemeliharaan.progress') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Progress</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center  px-6 transition-colors {{ request()->routeIs('request_pemeliharaan.close') ? 'bg-blue-500/13 rounded-lg font-semibold text-slate-700 active' : '' }}" href="{{ route('request_pemeliharaan.close') }}">
+                            <span class="ml-1 duration-300 opacity-100 font-semibold text-xs pointer-events-none ease">Close</span>
+                        </a>
+                    </li>
 @role(['SUPER ADMIN', 'Direktur (DIR-OPS)'])
 <li class="mt-0.5 w-full">
   <a id="hak_akses" class="sidebar-item py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{ route('role-permission.index') }}">
