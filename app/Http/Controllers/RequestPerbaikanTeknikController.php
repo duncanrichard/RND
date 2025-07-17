@@ -189,14 +189,14 @@ class RequestPerbaikanTeknikController extends Controller
         $ruangan = urldecode($request->input('ruangan', ''));
 
         // Query pencarian
-        $data = Aset::with('kategoriAset')->where(function ($query) use ($search) {
+        $data = Aset::with('KSategoriAset')->where(function ($query) use ($search) {
             $query->where('nama_aset', 'like', "%{$search}%")
                 ->orWhere('kode_aset', 'like', "%{$search}%");
         })
             //uncomment jika sudah banyak data atau diperlukan
             // ->where('departemen', '=', $departemen) // Filter berdasarkan departemen
             // ->where('lokasi_aset', '=', $ruangan)  // Filter berdasarkan ruangan
-            ->get(); // Ambil satu data pertama yang cocok
+            ->get(); // Ambil satu data pertamSa yang cocok
 
         //dd($data);
 
