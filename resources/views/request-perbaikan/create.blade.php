@@ -295,6 +295,7 @@
 
         // Panggil fungsi saat halaman dimuat
         toggleJenisRequestSections();
+        generateNoPerbaikan();
 
         // Tambahkan event listener untuk perubahan pada radio button
         $('input[name="jenis_request"]').on('change', function() {

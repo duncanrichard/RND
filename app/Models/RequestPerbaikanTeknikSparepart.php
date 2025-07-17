@@ -9,7 +9,7 @@ class RequestPerbaikanTeknikSparepart extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql_engineering';
+    protected $connection = 'engineering';
 
     protected $table = 'request_perbaikan_teknik_kebutuhan_sparepart';
 

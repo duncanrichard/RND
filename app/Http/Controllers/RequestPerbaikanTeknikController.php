@@ -108,7 +108,7 @@ class RequestPerbaikanTeknikController extends Controller
             $tahun = date('y'); // Ambil dua digit terakhir tahun
 
             // Cari nomor terakhir berdasarkan kode departemen dan tahun saat ini
-            $lastPengajuan = DB::connection('mysql_engineering')->table('request_perbaikan_teknik')
+            $lastPengajuan = DB::connection('engineering')->table('request_perbaikan_teknik')
                 ->whereRaw("YEAR(created_at) = ?", [date('Y')]) // Filter berdasarkan tahun
                 ->where('nomor_request_perbaikan', 'like', "%.$kodeDepartemen.%") // Filter berdasarkan kode departemen
                 ->where('jenis', '=', $jenis)
@@ -147,7 +147,7 @@ class RequestPerbaikanTeknikController extends Controller
             $tahun = date('y'); // Ambil dua digit terakhir tahun
 
             // Cari nomor terakhir berdasarkan kode departemen dan tahun saat ini
-            $lastPengajuan = DB::connection('mysql_engineering')->table('request_perbaikan_teknik')
+            $lastPengajuan = DB::connection('engineering')->table('request_perbaikan_teknik')
                 ->whereRaw("YEAR(created_at) = ?", [date('Y')]) // Filter berdasarkan tahun
                 ->where('nomor_request_perbaikan', 'like', "%.$kodeDepartemen.%") // Filter berdasarkan kode departemen
                 ->where('jenis', '=', $jenis)
@@ -230,7 +230,7 @@ class RequestPerbaikanTeknikController extends Controller
         // Validasi awal
         $validatedData = $request->validate([
             'jenis_request' => 'required',
-            'nomor_request_perbaikan' => 'required|string|unique:mysql_engineering.request_perbaikan_teknik,nomor_request_perbaikan',
+            'nomor_request_perbaikan' => 'required|string|unique:engineering.request_perbaikan_teknik,nomor_request_perbaikan',
             'tgl_permintaan' => 'required|date',
             'nama_pemohon' => 'required|string',
             'departemen_pemohon' => 'required|string',
@@ -287,7 +287,7 @@ class RequestPerbaikanTeknikController extends Controller
         }
 
         // Periksa apakah nomor urut yang sama sudah ada di bulan/tahun yang sama
-        $existingPengajuan = DB::connection('mysql_engineering')->table('request_perbaikan_teknik')
+        $existingPengajuan = DB::connection('engineering')->table('request_perbaikan_teknik')
             ->where('nomor_request_perbaikan', $validatedData['nomor_request_perbaikan'])
             ->exists();
 

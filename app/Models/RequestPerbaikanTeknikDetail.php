@@ -10,7 +10,7 @@ class RequestPerbaikanTeknikDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $connection = 'mysql_engineering';
+    protected $connection = 'engineering';
 
     protected $table = 'request_perbaikan_teknik_detail';
 

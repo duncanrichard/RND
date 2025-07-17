@@ -9,7 +9,7 @@ class RequestPerbaikanTeknikTindakan extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql_engineering';
+    protected $connection = 'engineering';
 
     protected $table = 'request_perbaikan_teknik_tindakan';
 

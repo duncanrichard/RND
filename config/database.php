@@ -125,20 +125,22 @@ return [
                 'strict' => true,
                 'engine' => null,
             ],
-           'mysql_engineering' => [
-    'driver' => 'mysql',
-    'host' => env('DB_ENGINEERING_HOST', '127.0.0.1'),
-    'port' => env('DB_ENGINEERING_PORT', '3306'),
-    'database' => env('DB_ENGINEERING_DATABASE', 'engineering_djc'),
-    'username' => env('DB_ENGINEERING_USERNAME', 'root'),
-    'password' => env('DB_ENGINEERING_PASSWORD', ''),
-    'unix_socket' => env('DB_SOCKET', ''),
-    'charset' => 'utf8mb4',
-    'collation' => 'utf8mb4_unicode_ci',
-    'prefix' => '',
-    'strict' => true,
-    'engine' => null,
-],
+          
+            'engineering' => [
+                'driver' => 'mysql',
+                'host' => env('DB_ENGINEERING_HOST', '127.0.0.1'),
+                'port' => env('DB_ENGINEERING_PORT', '3306'),
+                'database' => env('DB_ENGINEERING_DATABASE', 'engineering_djc'),
+                'username' => env('DB_ENGINEERING_USERNAME', 'root'),
+                'password' => env('DB_ENGINEERING_PASSWORD', 'DSI_@corp'),
+                'unix_socket' => env('DB_SOCKET', ''),
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+                'prefix' => '',
+                'strict' => true,
+                'engine' => null,
+            ],
+
 
 
             
